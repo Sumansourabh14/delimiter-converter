@@ -6,11 +6,11 @@ function App() {
   const [text, setText] = useState("");
   const [output, setOutput] = useState("");
 
-  const spaceToHyphens = (input) => {
+  const spaceToHyphens = (input: string): string => {
     return input.replace(/ /g, "-");
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     setOutput(spaceToHyphens(text));
