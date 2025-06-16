@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "./App.css";
 import { siteTitle } from "./data/content";
+import { Button, Textarea } from "@chakra-ui/react";
 
 function App() {
   const [text, setText] = useState("");
@@ -18,41 +19,35 @@ function App() {
 
   return (
     <>
-      <h1 className="font-bold text-4xl">{siteTitle}</h1>
-      <p className="read-the-docs"></p>
+      <h1>{siteTitle}</h1>
+      <p></p>
 
-      <p className="my-8">Convert space (" ") to hyphen ("-")</p>
-      <section className="flex justify-center my-8">
+      <p>Convert space (" ") to hyphen ("-")</p>
+      <section>
         <form onSubmit={handleSubmit}>
-          <section className="flex flex-col gap-8">
-            <section className="flex flex-col sm:flex-row gap-8">
+          <section>
+            <section>
               <section>
-                <textarea
+                <Textarea
                   style={{ fontFamily: "inherit" }}
                   placeholder="Enter text"
                   value={text}
                   onChange={(e) => setText(e.target.value)}
-                  className="border-2 p-2 rounded-lg"
                 />
               </section>
               <section>
-                <textarea
+                <Textarea
                   style={{ fontFamily: "inherit" }}
                   placeholder="Output text"
                   value={output}
                   readOnly
-                  className="border-2 p-2 rounded-lg"
                 />
               </section>
             </section>
             <section>
-              <button
-                type="submit"
-                disabled={text.trim().length === 0}
-                className="cursor-pointer border-2 py-2 px-8"
-              >
-                Convert
-              </button>
+              <Button type="submit" disabled={text.trim().length === 0}>
+                Click me
+              </Button>
             </section>
           </section>
         </form>
