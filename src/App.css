@@ -3,3 +3,10 @@
   padding: 2rem;
   text-align: center;
 }
+
+body {
+  background-image: url("./assets/a.webp");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
