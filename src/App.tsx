@@ -107,7 +107,7 @@ function App() {
                 >
                   <Switch.HiddenInput />
                   <Switch.Control />
-                  <Switch.Label>Change output to lower case</Switch.Label>
+                  <Switch.Label>Toggle upper/lower case</Switch.Label>
                 </Switch.Root>
               </VStack>
             </VStack>
