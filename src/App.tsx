@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  Clipboard,
   Container,
   Field,
   Stack,
@@ -81,6 +82,14 @@ function App() {
                       resize="vertical"
                       h="100px"
                     />
+                    <Clipboard.Root value={output}>
+                      <Clipboard.Trigger asChild>
+                        <Button variant="surface" size="xs">
+                          <Clipboard.Indicator />
+                          <Clipboard.CopyText />
+                        </Button>
+                      </Clipboard.Trigger>
+                    </Clipboard.Root>
                   </Field.Root>
                 </Box>
               </Stack>
