@@ -1,3 +1,15 @@
+import {
+  Box,
+  Button,
+  Clipboard,
+  Container,
+  Field,
+  Stack,
+  Switch,
+  Text,
+  Textarea,
+  VStack,
+} from "@chakra-ui/react";
 import { useState } from "react";
 import "./App.css";
 import { siteTitle } from "./data/content";
@@ -5,6 +17,7 @@ import { siteTitle } from "./data/content";
 function App() {
   const [text, setText] = useState("");
   const [output, setOutput] = useState("");
+  const [checked, setChecked] = useState(false);
 
   const spaceToHyphens = (input: string): string => {
     return input.replace(/ /g, "-");
@@ -16,47 +29,91 @@ function App() {
     setOutput(spaceToHyphens(text));
   };
 
+  const toggleLowerCase = (checked: boolean) => {
+    if (checked) {
+      setChecked(true);
+      setOutput(output.toUpperCase());
+    } else {
+      setChecked(false);
+      setOutput(output.toLowerCase());
+    }
+  };
+
   return (
     <>
-      <h1 className="font-bold text-4xl">{siteTitle}</h1>
-      <p className="read-the-docs"></p>
+      <Container centerContent py={8}>
+        <Text fontSize="5xl" fontWeight="bold">
+          {siteTitle}
+        </Text>
 
-      <p className="my-8">Convert space (" ") to hyphen ("-")</p>
-      <section className="flex justify-center my-8">
-        <form onSubmit={handleSubmit}>
-          <section className="flex flex-col gap-8">
-            <section className="flex flex-col sm:flex-row gap-8">
-              <section>
-                <textarea
-                  style={{ fontFamily: "inherit" }}
-                  placeholder="Enter text"
-                  value={text}
-                  onChange={(e) => setText(e.target.value)}
-                  className="border-2 p-2 rounded-lg"
-                />
-              </section>
-              <section>
-                <textarea
-                  style={{ fontFamily: "inherit" }}
-                  placeholder="Output text"
-                  value={output}
-                  readOnly
-                  className="border-2 p-2 rounded-lg"
-                />
-              </section>
-            </section>
-            <section>
-              <button
-                type="submit"
-                disabled={text.trim().length === 0}
-                className="cursor-pointer border-2 py-2 px-8"
+        <VStack py={16} style={{ width: "100%" }}>
+          <Text fontSize="lg" color="gray.400" pb={8}>
+            Convert space (" ") to hyphen ("-")
+          </Text>
+          <form onSubmit={handleSubmit} style={{ width: "100%" }}>
+            <VStack gap={4}>
+              <Stack
+                justifyContent={"center"}
+                width="100%"
+                direction={{
+                  base: "column",
+                  md: "row",
+                }}
               >
-                Convert
-              </button>
-            </section>
-          </section>
-        </form>
-      </section>
+                <Box flex={1}>
+                  <Field.Root>
+                    <Field.Label>Enter Text</Field.Label>
+                    <Textarea
+                      placeholder="Enter text here"
+                      value={text}
+                      onChange={(e) => setText(e.target.value)}
+                      resize="vertical"
+                      h="100px"
+                    />
+                  </Field.Root>
+                </Box>
+                <Box flex={1}>
+                  <Field.Root>
+                    <Field.Label>Converted Output</Field.Label>
+                    <Textarea
+                      placeholder="Converted output"
+                      value={output}
+                      readOnly
+                      resize="vertical"
+                      h="100px"
+                    />
+                    <Clipboard.Root value={output}>
+                      <Clipboard.Trigger asChild>
+                        <Button variant="surface" size="xs">
+                          <Clipboard.Indicator />
+                          <Clipboard.CopyText />
+                        </Button>
+                      </Clipboard.Trigger>
+                    </Clipboard.Root>
+                  </Field.Root>
+                </Box>
+              </Stack>
+              <VStack gap={4}>
+                <Button
+                  type="submit"
+                  colorScheme="blue"
+                  disabled={text.trim().length === 0}
+                >
+                  Convert
+                </Button>
+                <Switch.Root
+                  checked={checked}
+                  onCheckedChange={(e) => toggleLowerCase(e.checked)}
+                >
+                  <Switch.HiddenInput />
+                  <Switch.Control />
+                  <Switch.Label>Change output to lower case</Switch.Label>
+                </Switch.Root>
+              </VStack>
+            </VStack>
+          </form>
+        </VStack>
+      </Container>
     </>
   );
 }
