@@ -28,8 +28,8 @@ function App() {
     setOutput(spaceToHyphens(text));
   };
 
-  const toggleLowerCase = (e) => {
-    if (e.checked) {
+  const toggleLowerCase = (checked: boolean) => {
+    if (checked) {
       setChecked(true);
       setOutput(output.toUpperCase());
     } else {
@@ -94,7 +94,7 @@ function App() {
                 </Button>
                 <Switch.Root
                   checked={checked}
-                  onCheckedChange={(e) => toggleLowerCase(e)}
+                  onCheckedChange={(e) => toggleLowerCase(e.checked)}
                 >
                   <Switch.HiddenInput />
                   <Switch.Control />
