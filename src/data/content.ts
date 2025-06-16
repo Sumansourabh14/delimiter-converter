@@ -1,1 +1,1 @@
-export const siteTitle = "Undash Swapper";
+export const siteTitle = "Delimiter Converter";

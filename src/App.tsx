@@ -1,16 +1,17 @@
-import { useState } from "react";
-import "./App.css";
-import { siteTitle } from "./data/content";
 import {
   Box,
   Button,
   Container,
-  HStack,
+  Field,
   Stack,
   Switch,
+  Text,
   Textarea,
   VStack,
 } from "@chakra-ui/react";
+import { useState } from "react";
+import "./App.css";
+import { siteTitle } from "./data/content";
 
 function App() {
   const [text, setText] = useState("");
@@ -27,8 +28,8 @@ function App() {
     setOutput(spaceToHyphens(text));
   };
 
-  const toggleLowerCase = () => {
-    if (output === output.toLowerCase()) {
+  const toggleLowerCase = (e) => {
+    if (e.checked) {
       setChecked(true);
       setOutput(output.toUpperCase());
     } else {
@@ -39,44 +40,70 @@ function App() {
 
   return (
     <>
-      <h1>{siteTitle}</h1>
-      <p>Convert space (" ") to hyphen ("-")</p>
-      <Container centerContent fluid>
-        <form onSubmit={handleSubmit}>
-          <Box>
-            <HStack>
-              <Box>
-                <Textarea
-                  style={{ fontFamily: "inherit" }}
-                  placeholder="Enter text"
-                  value={text}
-                  onChange={(e) => setText(e.target.value)}
-                  variant={"subtle"}
-                  autoresize
-                />
-              </Box>
-              <Box>
-                <Textarea
-                  style={{ fontFamily: "inherit" }}
-                  placeholder="Output text"
-                  value={output}
-                  readOnly
-                  variant={"subtle"}
-                />
-              </Box>
-            </HStack>
-            <Box>
-              <Button type="submit" disabled={text.trim().length === 0}>
-                Convert
-              </Button>
-              <Switch.Root checked={checked} onCheckedChange={toggleLowerCase}>
-                <Switch.HiddenInput />
-                <Switch.Control />
-                <Switch.Label>Lower case</Switch.Label>
-              </Switch.Root>
-            </Box>
-          </Box>
-        </form>
+      <Container centerContent py={8}>
+        <Text fontSize="5xl" fontWeight="bold">
+          {siteTitle}
+        </Text>
+
+        <VStack py={16} style={{ width: "100%" }}>
+          <Text fontSize="lg" color="gray.400" pb={8}>
+            Convert space (" ") to hyphen ("-")
+          </Text>
+          <form onSubmit={handleSubmit} style={{ width: "100%" }}>
+            <VStack gap={4}>
+              <Stack
+                justifyContent={"center"}
+                width="100%"
+                direction={{
+                  base: "column",
+                  md: "row",
+                }}
+              >
+                <Box flex={1}>
+                  <Field.Root>
+                    <Field.Label>Enter Text</Field.Label>
+                    <Textarea
+                      placeholder="Enter text here"
+                      value={text}
+                      onChange={(e) => setText(e.target.value)}
+                      resize="vertical"
+                      h="100px"
+                    />
+                  </Field.Root>
+                </Box>
+                <Box flex={1}>
+                  <Field.Root>
+                    <Field.Label>Converted Output</Field.Label>
+                    <Textarea
+                      placeholder="Converted output"
+                      value={output}
+                      readOnly
+                      resize="vertical"
+                      h="100px"
+                    />
+                  </Field.Root>
+                </Box>
+              </Stack>
+              <VStack gap={4}>
+                <Button
+                  type="submit"
+                  colorScheme="blue"
+                  disabled={text.trim().length === 0}
+                >
+                  Convert
+                </Button>
+                <Switch.Root
+                  checked={checked}
+                  onCheckedChange={(e) => toggleLowerCase(e)}
+                >
+                  <Switch.HiddenInput />
+                  <Switch.Control />
+                  <Switch.Label>Change output to lower case</Switch.Label>
+                </Switch.Root>
+              </VStack>
+            </VStack>
+          </form>
+        </VStack>
       </Container>
     </>
   );
